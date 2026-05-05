@@ -18,7 +18,7 @@ OPENAI_CHAT_MODEL=gpt-5.4-mini
 OPENAI_EMBEDDING_MODEL=text-embedding-3-small
 ```
 
-Add `.txt` or `.md` files to `data/`.
+Add `.txt`, `.md`, or `.pdf` files to `data/`.
 
 Optional: download Kubernetes docs as example data:
 
@@ -80,6 +80,8 @@ http://localhost:8501
 
 Click **Ingest data** in the sidebar before asking questions.
 
+The sidebar also lets you choose hybrid, vector-only, or keyword-only search and filter retrieval to a specific source folder.
+
 ## CLI
 
 Ingest files:
@@ -102,8 +104,8 @@ docker compose run --rm app python src/rag.py "your question"
 
 ## Files
 
-- `src/ingest.py` loads `.txt` and `.md` files from `data/`, splits them, and stores embeddings in pgvector.
-- `src/retrieve.py` searches pgvector.
-- `src/rag.py` retrieves context and asks the chat model.
-- `src/app.py` provides a Streamlit chat UI and shows sources.
+- `src/ingest.py` loads `.txt`, `.md`, and `.pdf` files from `data/`, splits them, and stores embeddings in pgvector.
+- `src/retrieve.py` searches pgvector with hybrid keyword/vector retrieval and optional source-folder filtering.
+- `src/rag.py` retrieves context and asks the chat model, including streaming support for the UI.
+- `src/app.py` provides a Streamlit chat UI and shows source filename, chunk number, score, and content.
 - `scripts/download_kubernetes_docs.sh` downloads Kubernetes docs into `data/kubernetes/<language>/`.
